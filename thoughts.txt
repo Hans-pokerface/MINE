@@ -1,0 +1,18 @@
+a grid size of 7 times 7, the center is an empty space, if the mine moves into it, it disappears. 
+
+1.randomly generate 12(to be adjusted) mines 
+--use clock seeds and module and check if two falls into the same place. 
+
+while(grid is not full )
+{
+	1. the player choose a position.
+	--judge if there is a mine --continue/lose(return --next session)
+
+	2. all mines randomly choose a direction(up/down/left/right) and move one step in that direction.
+	--if the mine moves into the center place or it moves out of the boundary, it disappear(delete element in an array)
+
+}
+
+record the movements in the process when the loop breaks replay the process
+
+[further develop: do some calculation -- means]
