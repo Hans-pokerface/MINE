@@ -1,208 +1,17 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-const int INF=0x3f3f3f3f;
-const int SIZE=7;
-const int NUM=28;
-const int MAXN=NUM;
-
-/*---definition of struct---*/
-typedef struct
-{
-    bool status;//true--in grid; false--out of grid
-    int posx;//[0,6]
-    int posy;//[0,6]
-} MineInfo;
-MineInfo MineList[MAXN];
-
-typedef struct
-{
-    bool occupied;//true--mine in palce; false--no mine
-    int index;//if occupied, record which mine is there
-}GridInfo;
-GridInfo MineGrid[SIZE][SIZE];
-
-char PlayerOp[SIZE][SIZE];//0--unchosen,1--chosen,2--end
-
-/*---declaration of functions---*/
-void ClearGrid();
-void PrintGrid();
-void RecordInGrid();
-int RandomCreate(int,int);
-void EndofGame();
-int DeleteMine();
-void Failure();
-
-
-/*---implement of functions---*/
-void ClearGrid()
-{
-    for(int i=0;i<SIZE;i++)
-        for(int j=0;j<SIZE;j++)
-            MineGrid[i][j].occupied=false;
-}
-
-int DeleteMine()
-{
-    for(int i=0;i<NUM;i++)
-    {
-        if(MineList[i].status==true)
-        {
-            MineList[i].status=false;
-            return i;
-        }
-    }
-    return -1;
-}
-
-void PrintGrid()
-{
-    cout<<"  ";
-    for(int i=1;i<=SIZE;i++)
-        cout<<i<<" ";
-    cout<<endl;
-    for(int i=0;i<SIZE;i++)
-    {    
-        cout<<(char)(i+'A')<<" ";
-        for(int j=0;j<SIZE;j++)
-            cout<<PlayerOp[i][j]<<' ';
-        cout<<endl;
-    }
-}
-
-void RecordInGrid() 
-{
-    ClearGrid();
-    for(int i=0;i<NUM;i++)
-    {
-        if(MineList[i].status==false)
-            continue;
-        
-        int x=MineList[i].posx;
-        int y=MineList[i].posy;
-        MineGrid[x][y].occupied=true;
-        MineGrid[x][y].index=i;
-    }
-}
-
-int RandomCreate(int i,int num)
-{   
-    //create a mine, index of which is i.
-    MineList[i].posx=rand()%7;
-    MineList[i].posy=rand()%7;
-
-    if(MineList[i].posx==SIZE/2&&MineList[i].posy==SIZE/2)
-        return 1;
-
-    for(int j=0;j<num;j++)
-    {
-        //check if there is repetition in the coordinate.
-        if(j!=i&&MineList[j].status==true
-               &&MineList[i].posx==MineList[j].posx
-               &&MineList[i].posy==MineList[j].posy)
-        {
-            return 1;//exit with failure sign.
-        }
-    }    
-    MineList[i].status=true;
-    return 0;//exit with success sign.
-}
-
-void PrintMine()
-{
-    cout<<"  ";
-    for(int i=1;i<=SIZE;i++)
-        cout<<i<<" ";
-    cout<<endl;
-    for(int i=0;i<SIZE;i++)
-    {    
-        cout<<(char)(i+'A')<<" ";
-        for(int j=0;j<SIZE;j++)
-        {
-            if(i==SIZE/2&&j==SIZE/2)
-            {
-                cout<<"? ";
-            }
-            else
-            {
-                if(MineGrid[i][j].occupied==true)
-                {
-                    char s=MineGrid[i][j].index+'A';
-                    cout<<s<<' ';   
-                }             
-                else
-                    cout<<"0 ";
-            }
-        }
-        cout<<endl;
-    }
-}
-
-void EndofGame()
-{
-    cout<<"  ";
-    for(int i=1;i<=SIZE;i++)
-        cout<<i<<" ";
-    cout<<endl;
-    for(int i=0;i<SIZE;i++)
-    {    
-        cout<<(char)(i+'A')<<" ";
-        for(int j=0;j<SIZE;j++)
-        {
-            if(MineGrid[i][j].occupied==true)
-            {
-                cout << "\033[31m" << "● " << "\033[0m";
-            }             
-            else
-            {
-                if(PlayerOp[i][j]=='+')
-                    cout<<"\033[1;34m"<<PlayerOp[i][j]<<' '<<"\033[0m";
-                else
-                    cout<<PlayerOp[i][j]<<' ';
-            }
-        }
-        cout<<endl;
-    }
-}
-
-void Failure(int x,int y)
-{
-    cout<<"  ";
-    for(int i=1;i<=SIZE;i++)
-        cout<<i<<" ";
-    cout<<endl;
-    for(int i=0;i<SIZE;i++)
-    {    
-        cout<<(char)(i+'A')<<" ";
-        for(int j=0;j<SIZE;j++)
-        {
-            if(i==x&&j==y)
-            {
-                cout << "\033[31m" << "X " << "\033[0m";
-            }
-            else
-            {
-                if(MineGrid[i][j].occupied==true)
-                {
-                    cout << "\033[31m" << "● " << "\033[0m";
-                }             
-                else
-                    cout<<PlayerOp[i][j]<<' ';
-            }
-        }
-        cout<<endl;
-    }
-}
+#include "define.h"
+#include "grid.h"
+#include "mine.h"
+#include "display.h"
 
 int main() 
 {
     srand((unsigned)time(NULL));//do not use it in the loop
     cout << fixed << setprecision(2);
 
-    for(int i=0;i<SIZE;i++)
-        for(int j=0;j<SIZE;j++)
+    for(int i=0;i<GRID_SIZE;i++)
+        for(int j=0;j<GRID_SIZE;j++)
         {
-            if(i==SIZE/2&&j==SIZE/2)
+            if(i==GRID_SIZE/2&&j==GRID_SIZE/2)
                 PlayerOp[i][j]='?';
             else
                 PlayerOp[i][j]='o';
@@ -232,7 +41,7 @@ int main()
     
     int ExistMine=NUM;
     double odd;
-    int AllSpace=SIZE*SIZE-1;
+    int AllSpace=GRID_SIZE*GRID_SIZE-1;
     int ErrorCode=-1,FailCode=0;
     double eco=5;//overall ecomomy
     double incre=0;
@@ -247,7 +56,7 @@ int main()
     {
     loop:
         cout.flush();
-        system("cls");
+        CLEAR_SCREEN;
         PrintGrid();
         //PrintMine();
         odd=1-(double)ExistMine/AllSpace;
@@ -402,7 +211,7 @@ int main()
             continue;
         }
 
-        if(PlayerX==SIZE/2&&PlayerY==SIZE/2)
+        if(PlayerX==GRID_SIZE/2&&PlayerY==GRID_SIZE/2)
         {
             ErrorCode=3;
             continue;
@@ -440,16 +249,16 @@ int main()
             
             SuccStep=0;
             ExistMine=NUM-4*pDelete;
-            AllSpace=SIZE*SIZE-1;
+            AllSpace=GRID_SIZE*GRID_SIZE-1;
             for(int i=1;i<=3;i++)
                 cout<<"\033[1;31m"<<"BOOM!"<<"\033[0m"<<endl;
             Failure(PlayerX,PlayerY);
-            this_thread::sleep_for(chrono::seconds(1));
+            SLEEP_SEC(1);
 
-            for(int i=0;i<SIZE;i++)
-                for(int j=0;j<SIZE;j++)
+            for(int i=0;i<GRID_SIZE;i++)
+                for(int j=0;j<GRID_SIZE;j++)
                 {
-                    if(i==SIZE/2&&j==SIZE/2)
+                    if(i==GRID_SIZE/2&&j==GRID_SIZE/2)
                         PlayerOp[i][j]='?';
                     else
                         PlayerOp[i][j]='o';
