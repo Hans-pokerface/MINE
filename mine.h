@@ -1,9 +1,11 @@
 #include "define.h"
-int RandomCreate(int,int);
+int RandomCreate(int);
 int DeleteMine();
 
 int DeleteMine()
 {
+    //delete the first existing mine in MineList
+    //it's ok to just delete the first, caz it's randomly located
     for(int i=0;i<NUM;i++)
     {
         if(MineList[i].status==true)
@@ -15,21 +17,18 @@ int DeleteMine()
     return -1;
 }
 
-int RandomCreate(int i,int num)
+int RandomCreate(int i)
 {   
     //create a mine, index of which is i.
-    MineList[i].posx=rand()%7;
-    MineList[i].posy=rand()%7;
+    MineList[i].posx=rand()%GRID_SIZE;
+    MineList[i].posy=rand()%GRID_SIZE;
 
-    if(MineList[i].posx==GRID_SIZE/2&&MineList[i].posy==GRID_SIZE/2)
-        return 1;
-
-    for(int j=0;j<num;j++)
+    for(int j=0;j<i;j++)
     {
         //check if there is repetition in the coordinate.
-        if(j!=i&&MineList[j].status==true
-               &&MineList[i].posx==MineList[j].posx
-               &&MineList[i].posy==MineList[j].posy)
+        if( MineList[j].status==true
+            &&MineList[i].posx==MineList[j].posx
+            &&MineList[i].posy==MineList[j].posy)
         {
             return 1;//exit with failure sign.
         }
@@ -40,6 +39,7 @@ int RandomCreate(int i,int num)
 
 void PrintMine()
 {
+    //for test. it will not occur in the game for players
     cout<<"  ";
     for(int i=1;i<=GRID_SIZE;i++)
         cout<<i<<" ";
@@ -49,20 +49,10 @@ void PrintMine()
         cout<<(char)(i+'A')<<" ";
         for(int j=0;j<GRID_SIZE;j++)
         {
-            if(i==GRID_SIZE/2&&j==GRID_SIZE/2)
-            {
-                cout<<"? ";
-            }
+            if(MineGrid[i][j]==true)
+                cout<<"1 ";                
             else
-            {
-                if(MineGrid[i][j].occupied==true)
-                {
-                    char s=MineGrid[i][j].index+'A';
-                    cout<<s<<' ';   
-                }             
-                else
-                    cout<<"0 ";
-            }
+                cout<<"0 ";
         }
         cout<<endl;
     }

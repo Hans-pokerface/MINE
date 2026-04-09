@@ -5,13 +5,15 @@ void RecordInGrid();
 
 void ClearGrid()
 {
+    //initialize MineGrid: each grid is false, meaning empty
     for(int i=0;i<GRID_SIZE;i++)
         for(int j=0;j<GRID_SIZE;j++)
-            MineGrid[i][j].occupied=false;
+            MineGrid[i][j]=false;
 }
 
 void PrintGrid()
 {
+    //print player's option, showing which grid has been chosen
     cout<<"  ";
     for(int i=1;i<=GRID_SIZE;i++)
         cout<<i<<" ";
@@ -27,6 +29,7 @@ void PrintGrid()
 
 void RecordInGrid() 
 {
+    //record which grid has a mine according to MineList info
     ClearGrid();
     for(int i=0;i<NUM;i++)
     {
@@ -35,7 +38,6 @@ void RecordInGrid()
         
         int x=MineList[i].posx;
         int y=MineList[i].posy;
-        MineGrid[x][y].occupied=true;
-        MineGrid[x][y].index=i;
+        MineGrid[x][y]=true;
     }
 }

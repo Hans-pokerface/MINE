@@ -21,26 +21,21 @@
 
 using namespace std;
 
-const int GRID_SIZE=7;
-const int NUM=28;
+const int GRID_SIZE=8;
+const int NUM=30;
 const int MAXN=NUM;
 
 /*---definition of struct---*/
 typedef struct
 {
     bool status;//true--in grid; false--out of grid
-    int posx;//[0,6]
-    int posy;//[0,6]
+    int posx;//[0,7]
+    int posy;//[0,7]
 } MineInfo;
 MineInfo MineList[MAXN];
 
-typedef struct
-{
-    bool occupied;//true--mine in palce; false--no mine
-    int index;//if occupied, record which mine is there
-}GridInfo;
-GridInfo MineGrid[GRID_SIZE][GRID_SIZE];
+bool MineGrid[GRID_SIZE][GRID_SIZE];//ture:there is a mine
 
-char PlayerOp[GRID_SIZE][GRID_SIZE];//0--unchosen,1--chosen,2--end
+char PlayerOp[GRID_SIZE][GRID_SIZE];//'o':unchosen; '+':chosen
 
 #endif
