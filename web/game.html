@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>幸运扫雷 · 游戏界面</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <main class="page page-game">
+
+        <section class="compact-status-panel">
+            <div class="status-card small-card">
+                <h3>本步成功概率</h3>
+                <p id="successRate">--%</p>
+            </div>
+            <div class="status-card small-card">
+                <h3>当前连击数</h3>
+                <p id="currentStreak">--</p>
+            </div>
+            <div class="status-card small-card">
+                <h3>最大连续失败</h3>
+                <p id="maxFail">--</p>
+            </div>
+            <div class="status-card small-card">
+                <h3>总尝试次数</h3>
+                <p id="totalStep">--</p>
+            </div>
+
+        </section>
+
+    <!--
+        <section class="history-panel">
+            <h2>最近 10 次尝试</h2>
+            <div class="history-strip" id="recentHistory">暂无记录</div>
+            <div class="history-footer">
+                <span>最大连续成功：<strong id="maxSucc">0</strong></span>
+                <span>最大连续失败：<strong id="maxFail">0</strong></span>
+            </div>
+        </section>
+    -->
+
+        <section class="main-action-panel">
+            <div class="main-card">
+                <section class="shop-panel">
+                    
+                    <div class="shop-header">
+                        <h2>道具商店</h2>
+                        
+                        <h2>经济：<span id="economy">--</span></h2>
+                        
+                        <!--<p class="shop-note">消耗经济可购买道具提升胜算</p>-->
+                    </div>
+                    <div class="shop-list">
+                        <div class="shop-item">
+                            <div>
+                                <div class="shop-name">1.移除 4 个地雷</div>
+                                <div class="shop-desc">等级 <span id="deleteLevel">0</span>/5</div>
+                            </div>
+                            <div class="shop-meta">
+                                <span class="shop-price">费用：<span id="priceDelete">10</span></span>
+                                <button id="buyDelete" class="shop-button">购买</button>
+                            </div>
+                        </div>
+                        <div class="shop-item">
+                            <div>
+                                <div class="shop-name">2.基础奖励+</div>
+                                <div class="shop-desc">等级 <span id="rewardLevel">0</span>/3</div>
+                            </div>
+                            <div class="shop-meta">
+                                <span class="shop-price">费用：<span id="priceReward">5</span></span>
+                                <button id="buyReward" class="shop-button">购买</button>
+                            </div>
+                        </div>
+                        <div class="shop-item">
+                            <div>
+                                <div class="shop-name">3.连胜额外奖励</div>
+                                <div class="shop-desc">等级 <span id="combineLevel">0</span>/3</div>
+                            </div>
+                            <div class="shop-meta">
+                                <span class="shop-price">费用：<span id="priceCombine">5</span></span>
+                                <button id="buyCombine" class="shop-button">购买</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-note bottom-note">可直接点击按钮购买，道具效果会立即生效。</div>
+                </section>
+
+                <section class="board-panel">
+                    <!--
+                    <div class="board-header">
+                        <h2>8×8 棋盘</h2>
+                        <p>直接点击一个格子进行选择，踩雷后棋盘会重置。</p>
+                    </div>
+                    -->
+                    <div class="game-message" id="gameMessage">开始游戏，选择一个格子。</div>
+                    <div class="grid" id="gameBoard"></div>
+                </section>
+            </div>
+        </section>
+
+
+
+        <footer class="page-footer">
+            <a class="button button-secondary" href="index.html">返回主界面</a>
+        </footer>
+    </main>
+
+<!-- 胜利结算弹窗（悬浮） -->
+<div id="winOverlay" class="overlay hidden">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="winTitle">
+        <h3 id="winTitle">恭喜，你取得胜利！</h3>
+        <p>总步数：<span id="finalTotalStep">0</span></p>
+        <label for="playerName">请输入昵称（可选）：</label>
+        <input id="playerName" type="text" placeholder="你的昵称" maxlength="24" />
+        <div class="modal-actions">
+            <button id="closeWin" class="button button-secondary">关闭</button>
+            <button id="gotoResult" class="button button-primary">继续（查看结算界面）</button>
+            <button id="newGameNoSave" class="button">不保存，开始新游戏</button>
+        </div>
+    </div>
+</div>
+
+    <script src="log.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

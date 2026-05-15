@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>结算 - 占位</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="card result-card">
+      <h1>结算排行榜</h1>
+      <p>按总步数从小到大排序，显示已保存的玩家结果。</p>
+      <div id="rankList" class="rank-list"></div>
+      <div class="rank-footer">
+        <a class="button button-secondary" href="game.html">返回游戏</a>
+      </div>
+    </section>
+  </main>
+  <script src="log.js"></script>
+  <script>
+    const rankList = document.getElementById('rankList');
+    const logs = getSortedGameLogs();
+
+    if (!rankList) {
+      throw new Error('rankList element not found');
+    }
+
+    if (!logs.length) {
+      rankList.innerHTML = '<p>暂无记录。回到游戏并在获胜后输入用户名可生成排名。</p>';
+    } else {
+      const rows = logs.map((item, index) => `\n        <tr>\n          <td>${index + 1}</td>\n          <td>${item.name}</td>\n          <td>${item.steps}</td>\n          <td>${item.timestamp ? new Date(item.timestamp).toLocaleString() : ''}</td>\n        </tr>`).join('');
+      rankList.innerHTML = `
+        <table class="rank-table">
+          <thead>
+            <tr>
+              <th>排名</th>
+              <th>用户名</th>
+              <th>总步数</th>
+              <th>记录时间</th>
+            </tr>
+          </thead>
+          <tbody>${rows}
+          </tbody>
+        </table>`;
+    }
+  </script>
+</body>
+</html>
