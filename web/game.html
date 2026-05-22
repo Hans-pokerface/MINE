@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>幸运扫雷 · 游戏界面</title>
+    <title>运气扫雷-游戏界面</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="shop-item">
                             <div>
-                                <div class="shop-name">2.基础奖励+</div>
+                                <div class="shop-name">2.基础奖励增加</div>
                                 <div class="shop-desc">等级 <span id="rewardLevel">0</span>/3</div>
                             </div>
                             <div class="shop-meta">
@@ -74,7 +74,7 @@
                         </div>
                         <div class="shop-item">
                             <div>
-                                <div class="shop-name">3.连胜额外奖励</div>
+                                <div class="shop-name">3.连击获得额外奖励</div>
                                 <div class="shop-desc">等级 <span id="combineLevel">0</span>/3</div>
                             </div>
                             <div class="shop-meta">
@@ -99,8 +99,6 @@
             </div>
         </section>
 
-
-
         <footer class="page-footer">
             <a class="button button-secondary" href="index.html">返回主界面</a>
         </footer>
@@ -109,13 +107,13 @@
 <!-- 胜利结算弹窗（悬浮） -->
 <div id="winOverlay" class="overlay hidden">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="winTitle">
-        <h3 id="winTitle">恭喜，你取得胜利！</h3>
+        <h3 id="winTitle">恭喜你取得胜利！</h3>
         <p>总步数：<span id="finalTotalStep">0</span></p>
-        <label for="playerName">请输入昵称（可选）：</label>
+        <label for="playerName">请输入昵称：</label>
         <input id="playerName" type="text" placeholder="你的昵称" maxlength="24" />
+           <div id="nameError" class="input-error hidden">请输入昵称以保存并继续</div>
         <div class="modal-actions">
-            <button id="closeWin" class="button button-secondary">关闭</button>
-            <button id="gotoResult" class="button button-primary">继续（查看结算界面）</button>
+            <button id="gotoResult" class="button button-primary">保存，进入结算界面</button>
             <button id="newGameNoSave" class="button">不保存，开始新游戏</button>
         </div>
     </div>

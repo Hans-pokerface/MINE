@@ -30,7 +30,7 @@ body::before {
 .page {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 24px 18px;
+    padding: 20px 18px;
     position: relative;
     z-index: 1;
 }
@@ -265,11 +265,25 @@ mark {
     color: #0f172a;
 }
 
+/* 高连击提示 */
+.streak-high {
+    color: #b91c1c; /* 红色 */
+    font-weight: 900;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+
+/* 强化选择器以覆盖 .status-card p 默认样式 */
+.status-card p.streak-high {
+    color: #b91c1c;
+    font-weight: 900;
+    font-size: 2rem;
+}
+
 .main-card {
     display: grid;
     grid-template-columns: minmax(260px, 360px) minmax(520px, 1fr);
     gap: 100px;
-    padding: 24px 0 60px 60px;
+    padding: 8px 0 48px 60px;
     border: 1px solid rgba(96, 165, 250, 0.18);
     border-radius: 28px;
     background: rgba(255, 255, 255, 0.96);
@@ -390,7 +404,7 @@ mark {
     padding-bottom: 8px;
 }
 .game-message {
-    margin-top: 2px;
+    margin-top: 10px;
     padding: 14px 16px;
     border-radius: 18px;
     background: rgba(255, 255, 255, 0.92);
@@ -500,8 +514,11 @@ mark {
     border: 1px solid rgba(59,130,246,0.14);
 }
 .modal h3 {
-    margin: 0 0 8px 0;
-    color: #1e3a8a;
+    margin: 0 0 12px 0;
+    color: #b91c1c; /* 红色 */
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 800;
 }
 .modal p { margin: 6px 0 12px; }
 .modal input[type="text"] {
@@ -509,8 +526,18 @@ mark {
     padding: 10px 12px;
     border-radius: 10px;
     border: 1px solid rgba(148,163,184,0.16);
+    margin-top:12px;
     margin-bottom: 12px;
 }
+.input-error {
+    color: #b91c1c;
+    background: rgba(249, 250, 251, 0.9);
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+.hidden { display: none; }
 .modal-actions {
     display: flex;
     gap: 10px;

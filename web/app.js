@@ -114,6 +114,8 @@ function updateDisplay() {
     }
     if (currentStreakEl) {
         currentStreakEl.textContent = succStep.toString();
+        // Highlight high streaks in red when > 5
+        currentStreakEl.classList.toggle('streak-high', succStep > 5);
     }
     if (economyEl) {
         economyEl.textContent = eco.toFixed(2);
@@ -355,9 +357,16 @@ function initWinModalHandlers() {
 
 function handleGotoResult() {
     const name = playerNameInput ? playerNameInput.value.trim() : '';
-    if (name) {
-        saveGameLog(name, totalStep);
+    const nameErr = document.getElementById('nameError');
+    if (!name) {
+        if (nameErr) {
+            nameErr.classList.remove('hidden');
+        }
+        playerNameInput?.focus();
+        return; // do not continue without a name
     }
+    if (nameErr) nameErr.classList.add('hidden');
+    saveGameLog(name, totalStep);
     window.location.href = 'result.html';
 }
 
@@ -365,6 +374,8 @@ function showWinModal() {
     if (!winOverlay) return;
     if (finalTotalStepEl) finalTotalStepEl.textContent = totalStep.toString();
     if (playerNameInput) playerNameInput.value = '';
+    const nameErr = document.getElementById('nameError');
+    if (nameErr) nameErr.classList.add('hidden');
     winOverlay.classList.remove('hidden');
     playerNameInput?.focus();
 }
